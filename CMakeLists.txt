@@ -51,6 +51,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
     FILES
     Info.msg
+    Complex.msg
 #   Message2.msg
 )
 
@@ -58,6 +59,7 @@ add_message_files(
  add_service_files(
    FILES
    AddTwoInts.srv
+   ComplexAdd.srv
 #   Service2.srv
  )
 
@@ -142,6 +144,9 @@ include_directories(
  add_executable(client src/client.cpp)
 
 
+ add_executable(serverComplex src/serverComplex.cpp)
+ add_executable(clientComplex src/clientComplex.cpp)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -157,6 +162,8 @@ include_directories(
  add_dependencies(server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
+ add_dependencies(serverComplex ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(clientComplex ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
@@ -175,6 +182,14 @@ include_directories(
  )
 
  target_link_libraries(client
+   ${catkin_LIBRARIES}
+ )
+
+ target_link_libraries(serverComplex
+   ${catkin_LIBRARIES}
+ )
+
+ target_link_libraries(clientComplex
    ${catkin_LIBRARIES}
  )
 
