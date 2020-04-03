@@ -8,6 +8,8 @@ project(roborex)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  actionlib
+  actionlib_msgs
   roscpp
   rospy
   std_msgs
@@ -64,16 +66,17 @@ add_message_files(
  )
 
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
+ add_action_files(
+   FILES
+   Fibonacci.action
+   Averaging.action
+)
 
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
    std_msgs
+   actionlib_msgs
  )
 
 ################################################
@@ -108,7 +111,7 @@ add_message_files(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES roborex
-  CATKIN_DEPENDS message_runtime roscpp rospy std_msgs
+  CATKIN_DEPENDS message_runtime roscpp rospy std_msgs actionlib_msgs
 #  DEPENDS system_lib
 )
 
@@ -147,6 +150,13 @@ include_directories(
  add_executable(serverComplex src/serverComplex.cpp)
  add_executable(clientComplex src/clientComplex.cpp)
 
+ 
+ add_executable(fibonacci_server src/fibonacci_server.cpp)
+ add_executable(fibonacci_client src/fibonacci_client.cpp)
+ 
+ add_executable(averaging_server src/averaging_server.cpp)
+ add_executable(averaging_client src/averaging_client.cpp)
+## Rename C++ executable without prefix
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -164,6 +174,12 @@ include_directories(
 
  add_dependencies(serverComplex ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(clientComplex ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ 
+ add_dependencies(fibonacci_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(fibonacci_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ 
+ add_dependencies(averaging_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(averaging_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
@@ -190,6 +206,26 @@ include_directories(
  )
 
  target_link_libraries(clientComplex
+   ${catkin_LIBRARIES}
+ )
+
+
+ target_link_libraries(fibonacci_server
+   ${catkin_LIBRARIES}
+ )
+
+
+ target_link_libraries(fibonacci_client
+   ${catkin_LIBRARIES}
+ )
+
+
+ target_link_libraries(averaging_server
+   ${catkin_LIBRARIES}
+ )
+
+
+ target_link_libraries(averaging_client
    ${catkin_LIBRARIES}
  )
 
