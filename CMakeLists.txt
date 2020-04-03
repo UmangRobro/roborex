@@ -152,7 +152,8 @@ include_directories(
 
  
  add_executable(fibonacci_server src/fibonacci_server.cpp)
- add_executable(fibonacci_client src/fibonacci_client.cpp)
+ add_executable(fibonacci_client src/fibonacci_client.cpp) 
+ add_executable(fibonacci_callback_client src/fibonacci_callback_client.cpp)
  
  add_executable(averaging_server src/averaging_server.cpp)
  add_executable(averaging_client src/averaging_client.cpp)
@@ -177,7 +178,9 @@ include_directories(
  
  add_dependencies(fibonacci_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(fibonacci_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(fibonacci_callback_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  
+ add_dependencies(averaging_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(averaging_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(averaging_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
@@ -219,6 +222,10 @@ include_directories(
    ${catkin_LIBRARIES}
  )
 
+
+ target_link_libraries(fibonacci_callback_client
+   ${catkin_LIBRARIES}
+ )
 
  target_link_libraries(averaging_server
    ${catkin_LIBRARIES}
